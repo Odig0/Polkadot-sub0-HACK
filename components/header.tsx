@@ -8,29 +8,29 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-purple-200/50 shadow-lg shadow-purple-500/10">
+    <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-purple-300/50 shadow-lg shadow-purple-700/10">
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-purple-600 to-pink-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">
+          <div className="w-8 h-8 bg-gradient-to-br from-purple-700 to-pink-500 rounded-lg flex items-center justify-center text-white font-bold text-sm">
             A
           </div>
-          <span className="text-xl font-bold bg-gradient-to-r from-purple-600 via-pink-500 to-orange-500 bg-clip-text text-transparent hidden sm:inline">ArtBid</span>
+          <span className="text-xl font-bold bg-gradient-to-r from-purple-700 via-pink-500 to-orange-500 bg-clip-text text-transparent hidden sm:inline">ArtBid</span>
         </Link>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-8">
-          <Link href="/artists" className="text-foreground hover:text-purple-600 transition-colors font-medium">
+          <Link href="/artists" className="text-foreground hover:text-purple-700 transition-colors font-medium">
             Artists
           </Link>
-          <Link href="/" className="text-foreground hover:text-purple-600 transition-colors font-medium">
+          <Link href="/how-it-works" className="text-foreground hover:text-purple-700 transition-colors font-medium">
             How It Works
           </Link>
-          <a href="#" className="text-foreground hover:text-purple-600 transition-colors font-medium">
+          <Link href="/about" className="text-foreground hover:text-purple-700 transition-colors font-medium">
             About
-          </a>
+          </Link>
         </nav>
 
-        <button className="hidden md:block px-6 py-2 bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400 text-white rounded-full font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105">
+        <button className="hidden md:block px-6 py-2 bg-gradient-to-r from-purple-700 via-pink-500 to-orange-400 text-white rounded-full font-semibold hover:shadow-lg hover:shadow-purple-700/50 transition-all duration-300 hover:scale-105">
           Connect Wallet
         </button>
 
@@ -45,18 +45,18 @@ export default function Header() {
 
       {/* Mobile Navigation */}
       {isOpen && (
-        <div className="md:hidden border-t border-purple-200/50 bg-white/95 backdrop-blur-md">
+        <div className="md:hidden border-t border-purple-300/50 bg-white/95 backdrop-blur-md">
           <div className="px-4 py-4 space-y-4">
-            <Link href="/artists" className="block text-foreground hover:text-purple-600 transition-colors font-medium">
+            <Link href="/artists" className="block text-foreground hover:text-purple-700 transition-colors font-medium">
               Artists
             </Link>
-            <Link href="/" className="block text-foreground hover:text-purple-600 transition-colors font-medium">
+            <Link href="/how-it-works" className="block text-foreground hover:text-purple-700 transition-colors font-medium">
               How It Works
             </Link>
-            <a href="#" className="block text-foreground hover:text-purple-600 transition-colors font-medium">
+            <Link href="/about" className="block text-foreground hover:text-purple-700 transition-colors font-medium">
               About
-            </a>
-            <button className="w-full px-6 py-2 bg-gradient-to-r from-purple-600 via-pink-500 to-orange-400 text-white rounded-full font-semibold hover:shadow-lg hover:shadow-purple-500/50 transition-all duration-300">
+            </Link>
+            <button className="w-full px-6 py-2 bg-gradient-to-r from-purple-700 via-pink-500 to-orange-400 text-white rounded-full font-semibold hover:shadow-lg hover:shadow-purple-700/50 transition-all duration-300">
               Connect Wallet
             </button>
           </div>
