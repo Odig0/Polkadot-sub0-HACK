@@ -7,10 +7,24 @@ __turbopack_context__.s([
     ()=>arkivService
 ]);
 const ARKIV_API_BASE = 'https://arkacdn.cloudycoding.com/api';
+const ARKIV_UI_BASE = 'https://arkacdn.cloudycoding.com';
 const arkivService = {
     /**
-   * Health check para verificar que Arkiv está disponible
-   */ async healthCheck () {
+   * Obtener URL de Arkiv Explorer para una dirección de wallet
+   */ getWalletExplorerUrl (walletAddress) {
+        return `${ARKIV_UI_BASE}/query?address=${walletAddress}`;
+    },
+    /**
+   * Obtener URL de Arkiv Dashboard para una subasta
+   */ getAuctionDashboardUrl (auctionId) {
+        return `${ARKIV_UI_BASE}/dashboard?auction=${auctionId}`;
+    },
+    /**
+   * Obtener URL para verificar una puja por ID
+   */ getBidVerificationUrl (bidId) {
+        return `${ARKIV_UI_BASE}/verify?bid=${bidId}`;
+    },
+    async healthCheck () {
         try {
             const response = await fetch(`${ARKIV_API_BASE}/health`);
             return response.ok;

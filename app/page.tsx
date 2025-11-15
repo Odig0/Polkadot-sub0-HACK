@@ -1,7 +1,14 @@
+'use client'
+
 import Link from 'next/link'
 import { ArrowRight, Sparkles, Users, Lock } from 'lucide-react'
-import Header from '@/components/header'
+import dynamic from 'next/dynamic'
 import Footer from '@/components/footer'
+
+const Header = dynamic(() => import('@/components/header'), {
+  ssr: false,
+  loading: () => <div className="h-16 bg-gray-100"></div>,
+})
 
 export default function Home() {
   return (

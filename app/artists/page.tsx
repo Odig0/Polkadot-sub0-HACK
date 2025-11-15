@@ -1,12 +1,17 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import Header from '@/components/header'
+import dynamic from 'next/dynamic'
 import Footer from '@/components/footer'
 import ArtistCard from '@/components/artist-card'
 import EventCard from '@/components/event-card'
 import { mockArtists } from '@/lib/mock-data'
 import { Event } from '@/lib/types'
+
+const Header = dynamic(() => import('@/components/header'), {
+  ssr: false,
+  loading: () => <div className="h-16 bg-gray-100"></div>,
+})
 
 export default function ArtistsPage() {
   const [events, setEvents] = useState<Event[]>([])

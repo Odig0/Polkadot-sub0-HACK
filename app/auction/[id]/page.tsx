@@ -1,13 +1,32 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { use } from 'react'
-import Header from '@/components/header'
+import dynamic from 'next/dynamic'
 import Footer from '@/components/footer'
-import BidForm from '@/components/bid-form'
 import BidsTable from '@/components/bids-table'
 import { mockArtists, mockBids } from '@/lib/mock-data'
 import { Clock, Users } from 'lucide-react'
+
+// Importar dinámicamente Header y BidForm para evitar SSR issues con useWallet
+const Header = dynamic(() => import('@/components/header'), {
+  ssr: false,
+  loading: () => <div className="h-16 bg-gray-100"></div>,
+})
+
+const BidForm = dynamic(() => import('@/components/bid-form'), {
+  ssr: false,
+  loading: () => (
+    <div className="bg-white border-2 border-purple-200/60 rounded-2xl p-8 sticky top-24 shadow-xl shadow-purple-500/10 backdrop-blur-sm animate-pulse">
+      <div className="h-8 bg-gray-200 rounded mb-6 w-1/2"></div>
+      <div className="space-y-3">
+        <div className="h-20 bg-gray-200 rounded"></div>
+        <div className="h-20 bg-gray-200 rounded"></div>
+        <div className="h-12 bg-gray-200 rounded"></div>
+      </div>
+    </div>
+  ),
+})
 
 export default function AuctionPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)

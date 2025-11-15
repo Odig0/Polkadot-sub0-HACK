@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 import { useWallet } from '@/lib/wallet-context'
 import { createBidEntryAction } from '@/lib/arkiv-actions'
 import { TrendingUp, AlertCircle, CheckCircle, ArrowRight } from 'lucide-react'
@@ -15,7 +15,7 @@ interface BidFormProps {
 
 type BidStatus = 'idle' | 'loading' | 'success' | 'error'
 
-export default function BidForm({
+function BidFormContent({
   auctionId,
   currentHighestBid = 0,
   minimumBidIncrement = 100,
@@ -52,7 +52,6 @@ export default function BidForm({
 
       const bidValue = Number(bidAmount)
 
-      // Registrar en Arkiv
       const result = await createBidEntryAction({
         auctionId,
         bidderWallet: account.address,
@@ -66,12 +65,10 @@ export default function BidForm({
         setMessage(`¡Puja registrada! ID: ${result.data?.id?.substring(0, 8)}...`)
         setSuccessData(result.data)
 
-        // Llamar callback si existe
         if (onBidSubmit) {
           onBidSubmit(bidValue)
         }
 
-        // Resetear
         setTimeout(() => {
           setBidAmount('')
           setStatus('idle')
@@ -95,7 +92,6 @@ export default function BidForm({
         Hacer una Puja
       </h3>
 
-      {/* Mostrar si no está conectado */}
       {!isConnected || !account ? (
         <div className="mb-6 p-4 bg-yellow-50 border-2 border-yellow-200 rounded-lg flex items-center gap-3">
           <AlertCircle className="text-yellow-600 flex-shrink-0" size={20} />
@@ -106,13 +102,20 @@ export default function BidForm({
         </div>
       ) : (
         <>
-          {/* Info de la wallet */}
           <div className="mb-6 p-3 bg-green-50 border border-green-200 rounded-lg">
             <p className="text-xs text-green-700 font-semibold">Conectado como:</p>
             <p className="font-mono text-sm font-bold text-green-900 break-all">{account.address}</p>
+            <a
+              href={`https://arkacdn.cloudycoding.com/wallet/${account.address}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-xs text-green-600 hover:text-green-800 font-semibold mt-2 transition-colors"
+            >
+              Ver en Arkiv Explorer
+              <ArrowRight size={12} />
+            </a>
           </div>
 
-          {/* Información de la puja */}
           <div className="mb-6 space-y-2">
             <div className="flex justify-between items-center p-3 bg-purple-50 rounded-lg">
               <span className="text-gray-700 font-semibold text-sm">Puja Actual:</span>
@@ -206,12 +209,57 @@ export default function BidForm({
         </div>
       )}
 
-      {successData && (
-        <div className="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
-          <p className="text-xs font-semibold text-green-700">✓ Registrada en Arkiv</p>
-          <p className="text-xs font-mono text-green-800 break-all mt-1">{successData.id}</p>
+      {successData && account && (
+        <div className="mt-4 space-y-3">
+          <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+            <p className="text-xs font-semibold text-green-700">✓ Registrada en Arkiv</p>
+            <p className="text-xs font-mono text-green-800 break-all mt-1">{successData.id}</p>
+          </div>
+          
+          <div className="space-y-2">
+            <a
+              href={`https://arkacdn.cloudycoding.com/wallet/${account.address}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between w-full p-3 bg-blue-50 border border-blue-200 rounded-lg hover:bg-blue-100 transition-colors"
+            >
+              <span className="text-xs font-semibold text-blue-700">Ver tus pujas en Arkiv</span>
+              <ArrowRight size={14} className="text-blue-600" />
+            </a>
+            
+            <a
+              href={`https://arkacdn.cloudycoding.com/dashboard?auction=${auctionId}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-between w-full p-3 bg-indigo-50 border border-indigo-200 rounded-lg hover:bg-indigo-100 transition-colors"
+            >
+              <span className="text-xs font-semibold text-indigo-700">Ver todas las pujas de esta subasta</span>
+              <ArrowRight size={14} className="text-indigo-600" />
+            </a>
+          </div>
         </div>
       )}
     </div>
+  )
+}
+
+function BidFormFallback() {
+  return (
+    <div className="bg-white border-2 border-purple-200/60 rounded-2xl p-8 sticky top-24 shadow-xl shadow-purple-500/10 backdrop-blur-sm animate-pulse">
+      <div className="h-8 bg-gray-200 rounded mb-6 w-1/2"></div>
+      <div className="space-y-3">
+        <div className="h-20 bg-gray-200 rounded"></div>
+        <div className="h-20 bg-gray-200 rounded"></div>
+        <div className="h-12 bg-gray-200 rounded"></div>
+      </div>
+    </div>
+  )
+}
+
+export default function BidForm(props: BidFormProps) {
+  return (
+    <Suspense fallback={<BidFormFallback />}>
+      <BidFormContent {...props} />
+    </Suspense>
   )
 }

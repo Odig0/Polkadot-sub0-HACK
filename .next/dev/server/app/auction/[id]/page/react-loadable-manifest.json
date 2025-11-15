@@ -1,1 +1,16 @@
-{}
+{
+  "[project]/components/bid-form.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/components/bid-form.tsx [app-client] (ecmascript, next/dynamic entry)",
+    "files": [
+      "static/chunks/_e0e7a826._.js",
+      "static/chunks/components_bid-form_tsx_7ec750e0._.js"
+    ]
+  },
+  "[project]/components/header.tsx [app-client] (ecmascript, next/dynamic entry)": {
+    "id": "[project]/components/header.tsx [app-client] (ecmascript, next/dynamic entry)",
+    "files": [
+      "static/chunks/_726b2bfd._.js",
+      "static/chunks/components_header_tsx_7ec750e0._.js"
+    ]
+  }
+}

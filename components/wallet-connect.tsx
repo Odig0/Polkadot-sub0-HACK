@@ -2,9 +2,9 @@
 
 import { useWallet } from '@/lib/wallet-context'
 import { Wallet, LogOut, ChevronDown } from 'lucide-react'
-import { useState } from 'react'
+import { useState, Suspense } from 'react'
 
-export default function WalletConnect() {
+function WalletConnectContent() {
   const { isConnected, account, accounts, isLoading, error, connect, disconnect, switchAccount } =
     useWallet()
   const [showDropdown, setShowDropdown] = useState(false)
@@ -113,5 +113,25 @@ export default function WalletConnect() {
         </div>
       )}
     </div>
+  )
+}
+
+function WalletConnectFallback() {
+  return (
+    <button
+      disabled
+      className="flex items-center gap-2 px-4 py-2 bg-gray-200 text-gray-600 rounded-lg cursor-not-allowed opacity-60 font-semibold"
+    >
+      <Wallet size={18} />
+      <span>Cargando...</span>
+    </button>
+  )
+}
+
+export default function WalletConnect() {
+  return (
+    <Suspense fallback={<WalletConnectFallback />}>
+      <WalletConnectContent />
+    </Suspense>
   )
 }

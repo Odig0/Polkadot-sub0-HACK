@@ -1,11 +1,29 @@
 import { TicketEntry, AuctionBidEntry, ArkivResponse } from './types'
 
 const ARKIV_API_BASE = 'https://arkacdn.cloudycoding.com/api'
+const ARKIV_UI_BASE = 'https://arkacdn.cloudycoding.com'
 
 export const arkivService = {
   /**
-   * Health check para verificar que Arkiv está disponible
+   * Obtener URL de Arkiv Explorer para una dirección de wallet
    */
+  getWalletExplorerUrl(walletAddress: string): string {
+    return `${ARKIV_UI_BASE}/query?address=${walletAddress}`
+  },
+
+  /**
+   * Obtener URL de Arkiv Dashboard para una subasta
+   */
+  getAuctionDashboardUrl(auctionId: string): string {
+    return `${ARKIV_UI_BASE}/dashboard?auction=${auctionId}`
+  },
+
+  /**
+   * Obtener URL para verificar una puja por ID
+   */
+  getBidVerificationUrl(bidId: string): string {
+    return `${ARKIV_UI_BASE}/verify?bid=${bidId}`
+  },
   async healthCheck(): Promise<boolean> {
     try {
       const response = await fetch(`${ARKIV_API_BASE}/health`)
