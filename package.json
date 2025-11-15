@@ -10,6 +10,10 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
+    "@polkadot/extension-dapp": "^0.62.4",
+    "@polkadot/extension-inject": "^0.62.4",
+    "@polkadot/util": "^13.5.8",
+    "@polkadot/util-crypto": "^13.5.8",
     "@radix-ui/react-accordion": "1.2.2",
     "@radix-ui/react-alert-dialog": "1.1.4",
     "@radix-ui/react-aspect-ratio": "1.1.1",

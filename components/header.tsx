@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { Menu, X } from 'lucide-react'
+import WalletConnect from './wallet-connect'
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
@@ -30,9 +31,9 @@ export default function Header() {
           </Link>
         </nav>
 
-        <button className="hidden md:block px-6 py-2 bg-gradient-to-r from-purple-700 via-pink-500 to-orange-400 text-white rounded-full font-semibold hover:shadow-lg hover:shadow-purple-700/50 transition-all duration-300 hover:scale-105">
-          Connect Wallet
-        </button>
+        <div className="hidden md:block">
+          <WalletConnect />
+        </div>
 
         {/* Mobile Menu */}
         <button
@@ -56,9 +57,9 @@ export default function Header() {
             <Link href="/about" className="block text-foreground hover:text-purple-700 transition-colors font-medium">
               About
             </Link>
-            <button className="w-full px-6 py-2 bg-gradient-to-r from-purple-700 via-pink-500 to-orange-400 text-white rounded-full font-semibold hover:shadow-lg hover:shadow-purple-700/50 transition-all duration-300">
-              Connect Wallet
-            </button>
+            <div className="pt-2">
+              <WalletConnect />
+            </div>
           </div>
         </div>
       )}
