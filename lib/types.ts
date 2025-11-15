@@ -41,3 +41,36 @@ export interface Bid {
   amount: number
   isWinner: boolean
 }
+
+// Arkiv Ticket Entry Types
+export interface TicketEntry {
+  id: string
+  eventId: string
+  eventTitle: string
+  buyerId: string
+  buyerWallet: string
+  ticketType: 'regular' | 'winner' | 'bidder'
+  quantity: number
+  totalPrice: number
+  purchaseDate: string
+  status: 'pending' | 'confirmed' | 'used' | 'revoked'
+  transactionHash?: string
+  metadata?: Record<string, any>
+}
+
+export interface AuctionBidEntry {
+  id: string
+  auctionId: string
+  bidderWallet: string
+  bidAmount: number
+  bidTimestamp: string
+  isWinner: boolean
+  entryHash?: string
+}
+
+export interface ArkivResponse<T> {
+  success: boolean
+  data?: T
+  error?: string
+  message?: string
+}
