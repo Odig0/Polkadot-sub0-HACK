@@ -1,8 +1,6 @@
 'use client'
 
 import React, { createContext, useContext, useState, useEffect } from 'react'
-import type { InjectedExtension } from '@polkadot/extension-inject/types'
-import { web3Enable, web3Accounts, web3FromAddress } from '@polkadot/extension-dapp'
 
 export interface WalletAccount {
   address: string
@@ -29,42 +27,55 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
   const [accounts, setAccounts] = useState<WalletAccount[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [isMounted, setIsMounted] = useState(false)
 
-  // Intentar conectar automáticamente al montar
+  // Auto-connect cuando el componente está montado
   useEffect(() => {
-    const autoConnect = async () => {
-      try {
-        const extensions = await web3Enable('ArtBid-Polkadot')
-        if (extensions.length === 0) {
-          console.log('No Polkadot extension found')
-          return
-        }
-
-        const allAccounts = await web3Accounts()
-        if (allAccounts.length > 0) {
-          const formattedAccounts: WalletAccount[] = allAccounts.map((acc) => ({
-            address: acc.address,
-            name: acc.meta.name || 'Unknown',
-            type: acc.type || 'unknown',
-          }))
-
-          setAccounts(formattedAccounts)
-          setAccount(formattedAccounts[0])
-          setIsConnected(true)
-          console.log('Auto-connected to Polkadot wallet')
-        }
-      } catch (err) {
-        console.error('Auto-connect failed:', err)
-      }
-    }
-
+    setIsMounted(true)
     autoConnect()
   }, [])
 
+  const autoConnect = async () => {
+    if (typeof window === 'undefined') return
+
+    try {
+      const { web3Enable, web3Accounts } = await import('@polkadot/extension-dapp')
+
+      const extensions = await web3Enable('ArtBid-Polkadot')
+      if (extensions.length === 0) {
+        console.log('No Polkadot extension found')
+        return
+      }
+
+      const allAccounts = await web3Accounts()
+      if (allAccounts.length > 0) {
+        const formattedAccounts: WalletAccount[] = allAccounts.map((acc) => ({
+          address: acc.address,
+          name: acc.meta.name || 'Unknown',
+          type: acc.type || 'unknown',
+        }))
+
+        setAccounts(formattedAccounts)
+        setAccount(formattedAccounts[0])
+        setIsConnected(true)
+        console.log('Auto-connected to Polkadot wallet')
+      }
+    } catch (err) {
+      console.error('Auto-connect failed:', err)
+    }
+  }
+
   const connect = async () => {
+    if (typeof window === 'undefined') {
+      setError('No hay acceso a la ventana del navegador')
+      return
+    }
+
     try {
       setIsLoading(true)
       setError(null)
+
+      const { web3Enable, web3Accounts } = await import('@polkadot/extension-dapp')
 
       const extensions = await web3Enable('ArtBid-Polkadot')
 
@@ -111,6 +122,10 @@ export function WalletProvider({ children }: { children: React.ReactNode }) {
       setAccount(selected)
       console.log('Cuenta cambiada a:', selected)
     }
+  }
+
+  if (!isMounted) {
+    return <>{children}</>
   }
 
   const value: WalletContextType = {

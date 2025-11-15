@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { use } from 'react'
 import Header from '@/components/header'
 import Footer from '@/components/footer'
 import BidForm from '@/components/bid-form'
@@ -8,8 +9,9 @@ import BidsTable from '@/components/bids-table'
 import { mockArtists, mockBids } from '@/lib/mock-data'
 import { Clock, Users } from 'lucide-react'
 
-export default function AuctionPage({ params }: { params: { id: string } }) {
-  const artist = mockArtists.find(a => a.id === params.id) || mockArtists[0]
+export default function AuctionPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = use(params)
+  const artist = mockArtists.find(a => a.id === id) || mockArtists[0]
   const [bids, setBids] = useState(mockBids)
   const [userBid, setUserBid] = useState<number | null>(null)
 

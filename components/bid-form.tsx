@@ -175,9 +175,8 @@ export default function BidForm({
               onChange={(e) => setBidAmount(e.target.value)}
               placeholder={String(minBid)}
               min={minBid}
-              step={minimumBidIncrement}
-              disabled={!isConnected || !account || status === 'loading'}
               className="w-full pl-8 pr-4 py-3 bg-purple-50 border-2 border-purple-200 rounded-xl text-gray-900 placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-400/50 font-medium transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={!isConnected || !account || status === 'loading'}
             />
           </div>
           {bidAmount && !isValidBid && (

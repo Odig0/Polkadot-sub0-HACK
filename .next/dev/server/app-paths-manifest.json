@@ -1,5 +1,6 @@
 {
   "/api/events/route": "app/api/events/route.js",
   "/artists/page": "app/artists/page.js",
+  "/auction/[id]/page": "app/auction/[id]/page.js",
   "/page": "app/page.js"
 }

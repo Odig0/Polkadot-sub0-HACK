@@ -1,4 +1,20 @@
 {
-  "node": {},
+  "node": {
+    "40d4456fc2caedc2391af33eee3581df4d2c374d89": {
+      "workers": {
+        "app/auction/[id]/page": {
+          "moduleId": "[project]/.next-internal/server/app/auction/[id]/page/actions.js { ACTIONS_MODULE0 => \"[project]/lib/arkiv-actions.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": false,
+          "exportedName": "createBidEntryAction",
+          "filename": "lib/arkiv-actions.ts"
+        }
+      },
+      "layer": {
+        "app/auction/[id]/page": "action-browser"
+      },
+      "exportedName": "createBidEntryAction",
+      "filename": "lib/arkiv-actions.ts"
+    }
+  },
   "edge": {}
 }
