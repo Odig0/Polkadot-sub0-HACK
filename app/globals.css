@@ -1,8 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
 
-@custom-variant dark (&:is(.dark *));
-
 :root {
   /* Darkened purples for better cohesion from purple-500/600 to purple-700/800 */
   --background: oklch(0.98 0.01 30);
@@ -169,4 +167,3 @@
     background-clip: padding-box, border-box;
   }
 }
-</parameter>
