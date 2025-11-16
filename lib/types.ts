@@ -42,6 +42,34 @@ export interface Bid {
   isWinner: boolean
 }
 
+// Subasta Inversa (Dutch Auction)
+export interface ReverseAuction {
+  id: string
+  eventId: string
+  title: string
+  startPrice: number
+  endPrice: number
+  startTime: number // timestamp
+  endTime: number // timestamp
+  duration: number // en horas
+  currentPrice: number
+  status: 'active' | 'ended' | 'cancelled'
+  totalBids: number
+  winner?: string
+}
+
+// User Stake en subasta inversa
+export interface UserStake {
+  id: string
+  auctionId: string
+  userWallet: string
+  stakedAmount: number
+  stakingTime: number // timestamp
+  status: 'active' | 'claimed' | 'cancelled'
+  isWinner: boolean
+  winningPrice?: number
+}
+
 // Arkiv Ticket Entry Types
 export interface TicketEntry {
   id: string
